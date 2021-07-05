@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" type="image/png" href="icono.ico" />
+
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css">
+	<title>Red neuronal</title>
+	<style type="text/css">
+		.sitio {
+			padding: 5rem;
+			/* margin-left: 15rem; */ 
+			font-size: 5rem;
+			height: 120px;
+			width: auto;
+			color: white; /* para que empiece teniendo color blanc*/
+			text-align: center;
+		};
+
+	</style>
+</head>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+<script src="https://unpkg.com/brain.js"></script>
+<script type="text/javascript">
+
+	function eventoMenu() {
+		document.querySelector('.navegador-menu').classList.toggle('show'); //toggle, hace aparecer a SHOW si no esta, y lo desaparece si esta
+		document.querySelector('.botonMenu').classList.toggle('clik'); //toggle, hace aparecer a SHOW si no esta, y lo desaparece si esta
+	}
+
+	//Inicializar red neuronal
+	var network = new brain.NeuralNetwork();
+
+	//Entrenarla, darle ejemplos de cuando poner
+	//texto blanco, o texto negro segun el fondo
+	network.train([
+		//Fondo negro (entrada en 0s) = texto blanco (salida = 1)
+		{input: {rojo: 0, verde: 0, azul: 0}, output: {color: 1}},
+		//Fondo blanco (entrada en 1s) = texto negro (salida = 0)
+		{input: {rojo: 1, verde: 1, azul: 1}, output: {color: 0}},
+		//Fondo verde, texto negro
+		{input: {rojo: 0, verde: 1, azul: 0}, output: {color: 0}},
+		//Fondo azul, texto blanco
+		{input: {rojo: 0, verde: .43, azul: 1}, output: {color: 1}},
+		//Fondo rojo, texto blanco
+		{input: {rojo: 1, verde: 0, azul: 0}, output: {color: 1}},
+	]);
+
+	function update(color) {
+		//Cuando hice el video, existia color.rgb
+		//Ahora existe color.channels y dentro tiene varios componentes.
+		//Aqui hacemos el objeto "rgb" para que sea similar al video
+		var rgb = [color.channels.r, color.channels.g, color.channels.b];
+		//console.log(rgb);
+
+		var div = document.getElementById("sitio");
+		div.style.background = color.toHEXString(); //Nueva forma para poner el color de fondo
+
+		//Tomar el fondo actual elegido por el usuario,
+		//para usarlo de entrada para que la red nos de su
+		//prediccion del mejor color de texto a utilizar
+		var entrada = {
+			rojo: rgb[0]/255,
+			verde: rgb[1]/255,
+			azul: rgb[2]/255,
+		};
+
+		//Obtener la prediccion de la red
+		var resultado = network.run(entrada); //ejecutamos la red
+		console.log(resultado); //ahi vas a ver que se acerca a 0, 0.5 o 1
+
+		//Si resultado > .5, se considera color de texto blanco
+		if (resultado.color > .5) {
+			div.style.color = "white";
+			div.innerHTML = "Blanco"
+		}  else {
+			div.style.color = "black";
+			div.innerHTML = "Negro"
+
+		}
+	
+	}
+
+</script>
+
+<body>
+
+	<nav class="navegador">
+
+		<span class="logo">Chopolin</span>
+
+		<ul class="navegador-menu">
+			<li><a href="#inicio">Inicio</a></li>
+			<li><a href="#inteligencia-artificial">Inteligencia Artificial</a></li>
+			<li><a href="#machine-learning">Aprendizaje Automatico</a></li>
+			<li><a href="#redes-neuronales">Redes Neuronales</a></li>
+		</ul>
+
+		<div class="botonMenu">
+			<i onclick="eventoMenu()" class="fas fa-bars"></i>
+		</div>
+
+	</nav>
+	
+	<div class="container">
+		<header>
+			<h1 id="inicio" class="tituloPagina">Primera Red Neuronal</h1>
+		</header>
+		<h3  class="texto">En esta parte de la pagina vas a poder elegir el color que quieras. Si es un color claro la palabra se cambiara a <span class="textoNegro">negro</span> y si elegis un color oscuro se cambiara a <span class="textoBlanco">blanco</span> </h3>
+		<br></br><hr></hr><br></br>
+		<span class="seleccionaColor">
+			<input  data-jscolor="{value:'#CC66FF'}", onInput="update(this.jscolor)"></input>
+			<i class="fas fa-reply"></i>   Selecciona un color!
+		</span>
+	
+		<br></br><br></br>
+		<div class="sitio" id="sitio">
+			Blanco
+		</div>
+
+		<br></br><hr></hr>
+
+		<div class="divisores" id="inteligencia-artificial"></div>
+		<div class="subTitulo">Inteligencia Artificial</div>
+		<div class="cardTextos">
+			<div>
+				<p>La Inteligencia Artificial (IA) es la combinación de algoritmos planteados con el propósito de crear máquinas que presenten las mismas capacidades que el ser humano. </p>	
+			</div>
+			<div>
+				<p>Una tecnología que todavía nos resulta lejana y misteriosa, pero que desde hace unos años está presente en nuestro día a día a todas horas.</p>	
+			</div>
+			<div>
+				<p>Un sistema experto definido como una estructura de programación capaz de <span class="textoBlanco">almacenar y utilizar un conocimiento sobre un área determinada que se traduce en su capacidad de aprendizaje.</span></p>	
+			</div>
+			<div>
+				<p>Percibe su entorno y lleva a cabo acciones que maximicen sus posibilidades de éxito en algún objetivo o tarea, <span class="textoBlanco">la máquina imita las funciones «cognitivas» de los humanos.</span></p>	
+			</div>
+		</div>
+
+
+		<div class="divisores" id="machine-learning"></div>
+		<div  class="subTitulo">Machine Learning</div>
+		<div class="cardTextos">
+			<div>
+				<p>El aprendizaje automático es un subconjunto específico o rama de la Inteligencia Artificial que <span class="textoBlanco">entrena a una máquina para aprender.</span></p>	
+			</div>
+			<div>
+				<p>Permite que un sistema aprenda y mejore sus respuestas. Su objetivo es, mediante algoritmos, <span class="textoBlanco">hacer predicciones o decisiones sin ser programado explicitamente. </span></p>	
+			</div>
+			<div>
+				<p>Los algoritmos de aprendizaje automático construyen un modelo basado en datos de muestra, conocidos como "datos de entrenamiento".</p>	
+			</div>
+			<div>
+				<p>Identifica patrones complejos en millones de datos.</p>	
+			</div>
+		</div>
+
+
+		<div class="divisores" id="redes-neuronales"></div>
+		<div class="subTitulo">Redes Nueronales</div>
+		<div class="cardTextos">
+			<div>
+				<p>Son sistemas computacionales, inspirados en las neuronas que constituyen el cerebro de los animales, dotando a los ordenadores de inteligencia artificial. </p>	
+			</div>
+			<div>
+				<p>El objetivo de estos algoritmos es entender datos del mundo real (imágenes, texto, voz..etc), procesarlos y clasificarlos o etiquetarlos. </p>	
+			</div>
+			<div>
+				<p>Es aprendizaje automatico, ya que estos <span class="textoBlanco">sistemas aprenden y se forman a sí mismos, en lugar de ser programados de forma explícita.</span></p>	
+			</div>
+			<div>
+				<p>Consiste en un conjunto de unidades, llamadas neuronas artificiales, conectadas entre sí para transmitirse señales. <span class="textoBlanco">La información de entrada atraviesa la red neuronal (donde se somete a diversas operaciones) produciendo unos valores de salida.</span></p>	
+			</div>
+		</div>
+
+
+		<div class="masInfo">
+			<a target="_blank" href="https://blog.enzymeadvisinggroup.com/redes-neuronales-que-son-y-aplicaciones">Click aqui para + info</a>
+		</div>
+
+
+	</div>
+
+
+	<div class="footer">
+		<p class="textoFooter">
+			<b>2yCalc Team</b> <br></br>
+			Visita nuestra web <a target="blank" href="http://www.2ycalc.com">www.2yCalc.com</a>
+		</p>
+	</div>
+
+	
+</body>
+</html>
+
