@@ -1,1 +1,0 @@
-# proyect-primeraRedNeuronal-info
