@@ -1,0 +1,206 @@
+body{
+    background-color: black;
+    margin: 0px;
+}
+
+.texto{
+    color:white;
+    font-size: 2rem;
+    font-family: 'Comic Sans MS'
+}
+
+.tituloPagina{
+    color:white;
+    font-size: 3rem;
+    font-family: 'Comic Sans MS'
+}
+
+.textoBlanco{
+    background-color: gray;
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    
+}
+
+.textoNegro{
+    background-color: gray;
+    color: black;
+    border-radius: 10px;
+    padding: 5px;
+
+}
+
+.divisores{
+    color: black;
+    background-color: black;
+    margin-top: 70px;
+    padding: 20px
+}
+
+.seleccionaColor{
+    color: white;
+    font-size:1.5rem;
+}
+
+.container{
+    margin: 35px;
+    width: auto;
+}
+
+.navegador{
+    /*position y top para que el navegador NUNCA se deje de ver por mas que scrolees*/
+    position: fixed;
+    top: 0;
+    background-color: white;
+    margin: 0px;
+    height: 130px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /*al poner el logo ANTES del menu, esto deja todo el espacio posible entre las 2 cosas, por eso lo tira bien a la derecha*/
+}
+
+.navegador-menu{
+    display: flex;
+    padding: 4px;
+}
+
+.navegador-menu li{
+    padding: 3px 30px ; /*la primera se cambia de alto, la segunda le da espaci entre cada LI. la primera no es necesario porque en el nav puse align-items. center*/
+    font-size: 2rem;
+    list-style: none;
+
+}
+
+.navegador-menu li a{
+    color: black;
+    text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navegador-menu li a:hover{
+    opacity: .5;
+    color: rgb(62, 236, 18);
+}
+
+.logo{
+    font-size: 3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.imagenRed{
+    margin-top: 50px;
+}
+
+.botonMenu{
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    right: 30px; /*30px*/
+    font-size: 4rem;
+    transition: all .5s ease-in-out; /*(5 segundos) una transicion, un efecto para que no sea tan brusco */
+
+}
+
+
+.footer{
+    display: fixed;
+    background-color: white;
+    width: auto;
+    /* height: 100px; esto me cagaba todo. no hay que ponerlo */
+    text-align: center;
+    font-size: 2.5rem;
+    padding: 1px;
+    padding-bottom: 30px;
+
+
+}
+
+.textoFooter{
+    font-size: 3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.textoFooter a{
+    color: blue;
+    text-decoration: none;
+    font-size: 2.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cardTextos{    
+    grid-template-columns: 1fr 1fr;
+    display: grid;
+    gap: 80px; /* espacio entre columnas */
+    margin-top: 20px;
+    color: white;
+    font-family: 'Comic Sans MS';
+    font-size: 2.5rem;
+    box-shadow: 0px 0px 12px;
+    border-radius: 15px;
+}
+
+.subTitulo{
+    margin-top: 80px;
+    color: rgb(62, 236, 18);
+    font-size:2rem;
+    /* text-decoration: green wavy underline; subrayado con montañitas */
+    font-family: 'Comic Sans MS';
+
+}
+
+
+.masInfo{
+    margin-top:100px;
+}
+.masInfo a{
+    font-size:2.5rem;
+    color: white;
+}
+
+@media(max-width: 1260px){
+    .botonMenu{
+        display:block;
+    }
+    .botonMenu.clik{
+        position: absolute;
+        cursor: pointer;
+        /* top: 18px;
+        right: 15px;
+        z-index: 2;
+        font-size: 3.5rem; */
+        transform: rotate(180deg);
+        transition: all .5s ease-in-out; /*(5 segundos) una transicion, un efecto para que no sea tan brusco */
+        color: rgb(62, 236, 18);
+
+    }
+
+    .navegador-menu{
+        display: block; /*para que aparezcan uno arriba del otro y no al lado*/
+        position: absolute; /* para que sea encima de todo*/
+        top: 0; /* para que este en la esquina*/
+        right: 0; 
+        background: white;
+        margin: 0px;
+        width: auto;
+        padding: 30px; /* mas espaciado entre cada elemento*/
+        transform: translateX(-1300px); /* PARA QUE DESAPAREZCA TOTALMENTE DE LA VISTA.   /// estaba levemente separado del costado izquierdo de la pagina, con -20px lo corremos para que quede en el borde. eje X*/
+        transition: all .0s ease-in-out; 
+        margin-right: 20px;
+        opacity: .9;
+    }
+
+
+    .navegador-menu.show{ /*cuando este la clase show va a aparecer. con javascript hacemos aparecer y desaparecer esta clase*/
+        transform: translateX(20px);
+        transition: all .5s ease-in-out; /*(5 segundos) una transicion, un efecto para que no sea tan brusco */
+
+    }
+
+    .navegador-menu li{
+        padding: 80px; /* mas espaciado entre cada elemento*/
+        border-bottom: #ccc solid 1px; 
+    }
+}
